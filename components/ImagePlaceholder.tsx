@@ -1,7 +1,8 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { ImageIcon } from './icons/Icons';
 import { getImageUrl } from '../utils/imageUtils';
+import ImageModal from './ImageModal';
 
 interface ImagePlaceholderProps {
   description: string;
@@ -20,6 +21,13 @@ const ImagePlaceholder: React.FC<ImagePlaceholderProps> = ({
 }) => {
   // Xử lý đường dẫn ảnh với base URL
   const imageSrc = src ? getImageUrl(src) : null;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleImageClick = () => {
+    if (imageSrc) {
+      setIsModalOpen(true);
+    }
+  };
 
   return (
     <div className={`w-${width} my-6`}>
@@ -29,8 +37,10 @@ const ImagePlaceholder: React.FC<ImagePlaceholderProps> = ({
           <img
             src={imageSrc}
             alt={description}
-            className="w-full h-auto object-contain dark:bg-gray-800 bg-gray-100"
+            className="w-full h-auto object-contain dark:bg-gray-800 bg-gray-100 cursor-pointer hover:opacity-90 transition-opacity duration-200"
             style={{ maxHeight: '500px' }}
+            onClick={handleImageClick}
+            title="Click để xem ảnh phóng to"
           />
         </div>
       ) : (
@@ -43,6 +53,17 @@ const ImagePlaceholder: React.FC<ImagePlaceholderProps> = ({
         </div>
       )}
       {caption && <p className="text-center text-sm dark:text-gray-500 text-gray-600 mt-2 italic">{caption}</p>}
+
+      {/* Image Modal */}
+      {imageSrc && (
+        <ImageModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          src={imageSrc}
+          alt={description}
+          caption={caption}
+        />
+      )}
     </div>
   );
 };
