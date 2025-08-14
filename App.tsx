@@ -10,9 +10,23 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import { SearchProvider } from './contexts/SearchContext';
 
 const App: React.FC = () => {
-  const [isSidebarOpen, setSidebarOpen] = useState(true);
+  // Mặc định mở sidebar trên desktop, đóng trên mobile
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+
+  // Kiểm tra screen size và set sidebar state phù hợp
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const isDesktop = window.innerWidth >= 768; // md breakpoint
+      setSidebarOpen(isDesktop);
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
 
   const findComponent = (path: string, items: NavItem[]): React.ComponentType | null => {
     for (const item of items) {

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { MenuIcon, PVLogo } from './icons/Icons';
+import { MenuIcon } from './icons/Icons';
 import GlobalSearch from './GlobalSearch';
 import ThemeToggle from './ThemeToggle';
 
@@ -14,10 +14,22 @@ const Header: React.FC<HeaderProps> = ({ sidebarOpen, setSidebarOpen }) => {
     <header className="sticky top-0 z-30 dark:bg-gray-900/75 bg-white/90 backdrop-blur-lg border-b dark:border-gray-700 border-gray-200">
       <div className="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
         <div className="flex items-center">
-            <div className="flex items-center">
-               <PVLogo />
-               <h1 className="text-lg md:text-xl font-semibold ml-2 dark:text-white text-gray-900">Phuong Viet ERP</h1>
-            </div>
+          {/* Mobile menu button */}
+          <button
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            className="md:hidden p-2 rounded-md dark:text-gray-400 text-gray-600 dark:hover:text-white hover:text-gray-900 dark:hover:bg-gray-700 hover:bg-gray-100 mr-3"
+          >
+            <MenuIcon />
+          </button>
+
+          <div className="flex items-center">
+             <img
+               src={`${import.meta.env.BASE_URL}pic/01_logo_PV.png`}
+               alt="Phương Việt Logo"
+               className="w-7 h-7 object-contain"
+             />
+             <h1 className="text-lg md:text-xl font-semibold ml-2 dark:text-white text-gray-900">Phương Việt ERP</h1>
+          </div>
         </div>
 
         {/* Right side - Search and Theme Toggle */}

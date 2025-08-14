@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { navItems } from '../constants';
 import type { NavItem } from '../types';
@@ -13,7 +13,16 @@ interface SidebarProps {
 const SidebarNavItem: React.FC<{ item: NavItem; level: number }> = ({ item, level }) => {
   const location = useLocation();
   const initialOpenState = location.pathname.startsWith(item.href.substring(1));
-  const [isOpen, setIsOpen] = useState(initialOpenState);
+
+  // Mặc định mở rộng tất cả trên desktop
+  const [isOpen, setIsOpen] = useState(true);
+
+  // Cập nhật state dựa trên current path khi component mount
+  useEffect(() => {
+    if (initialOpenState) {
+      setIsOpen(true);
+    }
+  }, [initialOpenState]);
 
   const hasChildren = item.children && item.children.length > 0;
   const currentPath = location.pathname === '/' ? '#/' : `#${location.pathname}`;
@@ -54,13 +63,32 @@ const SidebarNavItem: React.FC<{ item: NavItem; level: number }> = ({ item, leve
   );
 };
 
-const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
+const Sidebar: React.FC<SidebarProps> = ({ isOpen, setOpen }) => {
   return (
-    <aside
-      className={`fixed top-0 left-0 z-40 w-64 h-screen dark:bg-gray-900 bg-white border-r dark:border-gray-700 border-gray-200 transform transition-transform duration-300 ease-in-out hidden md:block md:translate-x-0`}
-    >
-      <div className="flex items-center justify-center h-16 border-b dark:border-gray-700 border-gray-200">
-        <h2 className="text-2xl font-bold dark:text-white text-gray-900">Tài liệu</h2>
+    <>
+      {/* Mobile overlay */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-black bg-opacity-50 md:hidden"
+          onClick={() => setOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside
+        className={`fixed top-0 left-0 z-40 w-64 h-screen dark:bg-gray-900 bg-white border-r dark:border-gray-700 border-gray-200 transform transition-transform duration-300 ease-in-out ${
+          isOpen ? 'translate-x-0' : '-translate-x-full'
+        } md:translate-x-0`}
+      >
+      <div className="flex items-center justify-center h-16 border-b dark:border-gray-700 border-gray-200 px-4">
+        <div className="flex items-center space-x-3">
+          <img
+            src={`${import.meta.env.BASE_URL}pic/01_logo_PV.png`}
+            alt="Phương Việt Logo"
+            className="w-8 h-8 object-contain"
+          />
+          <h2 className="text-lg font-bold dark:text-white text-gray-900">Phương Việt ERP</h2>
+        </div>
       </div>
       <nav className="py-4 px-2 overflow-y-auto h-[calc(100vh-4rem)]">
         <ul className="space-y-2">
@@ -70,6 +98,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
         </ul>
       </nav>
     </aside>
+    </>
   );
 };
 
