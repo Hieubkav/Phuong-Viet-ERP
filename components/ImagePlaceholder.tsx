@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { ImageIcon } from './icons/Icons';
+import { getImageUrl } from '../utils/imageUtils';
 
 interface ImagePlaceholderProps {
   description: string;
@@ -17,13 +18,16 @@ const ImagePlaceholder: React.FC<ImagePlaceholderProps> = ({
   height = '64',
   src
 }) => {
+  // Xử lý đường dẫn ảnh với base URL
+  const imageSrc = src ? getImageUrl(src) : null;
+
   return (
     <div className={`w-${width} my-6`}>
-      {src ? (
+      {imageSrc ? (
         // Hiển thị ảnh thật nếu có src
         <div className="rounded-lg overflow-hidden border dark:border-gray-600 border-gray-300">
           <img
-            src={src}
+            src={imageSrc}
             alt={description}
             className="w-full h-auto object-contain dark:bg-gray-800 bg-gray-100"
             style={{ maxHeight: '500px' }}

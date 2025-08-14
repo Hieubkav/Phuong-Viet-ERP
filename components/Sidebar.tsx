@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { navItems } from '../constants';
 import type { NavItem } from '../types';
 import { ChevronRightIcon } from './icons/Icons';
+import logoUrl from '../pic/01_logo_PV.png';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -83,7 +84,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setOpen }) => {
       <div className="flex items-center justify-center h-16 border-b dark:border-gray-700 border-gray-200 px-4">
         <div className="flex items-center space-x-3">
           <img
-            src={`${import.meta.env.BASE_URL}pic/01_logo_PV.png`}
+            src={logoUrl}
             alt="Phương Việt Logo"
             className="w-8 h-8 object-contain"
           />

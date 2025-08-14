@@ -3,6 +3,7 @@ import React from 'react';
 import { MenuIcon } from './icons/Icons';
 import GlobalSearch from './GlobalSearch';
 import ThemeToggle from './ThemeToggle';
+import logoUrl from '../pic/01_logo_PV.png';
 
 interface HeaderProps {
   sidebarOpen: boolean;
@@ -24,7 +25,7 @@ const Header: React.FC<HeaderProps> = ({ sidebarOpen, setSidebarOpen }) => {
 
           <div className="flex items-center">
              <img
-               src={`${import.meta.env.BASE_URL}pic/01_logo_PV.png`}
+               src={logoUrl}
                alt="Phương Việt Logo"
                className="w-7 h-7 object-contain"
              />
