@@ -1,22 +1,47 @@
 # Hướng dẫn Deploy lên GitHub Pages
 
-## Cấu hình GitHub Pages
+## ⚠️ QUAN TRỌNG: Các bước cần thực hiện ngay
 
-### Bước 1: Bật GitHub Pages
-1. Vào repository trên GitHub: https://github.com/Hieubkav/Phuong-Viet-ERP
-2. Vào **Settings** > **Pages**
-3. Trong phần **Source**, chọn **GitHub Actions**
+### Bước 1: Kiểm tra branch hiện tại
+```bash
+git branch
+```
+Nếu đang ở branch `master`, workflow sẽ tự động chạy khi push.
+Nếu đang ở branch khác, cần checkout về `main` hoặc `master`.
 
-### Bước 2: Cấu hình Workflow
-Workflow đã được tạo tại `.github/workflows/deploy.yml` và sẽ tự động:
-- Chạy khi có push vào branch `main`
-- Build dự án bằng Bun
-- Deploy lên GitHub Pages
+### Bước 2: Push code lên GitHub
+```bash
+# Thêm tất cả files
+git add .
 
-### Bước 3: Kiểm tra Deployment
-1. Push code lên branch `main`
-2. Vào tab **Actions** để theo dõi quá trình build
-3. Sau khi hoàn thành, trang web sẽ có sẵn tại: `https://hieubkav.github.io/Phuong-Viet-ERP/`
+# Commit với message
+git commit -m "Add GitHub Pages deployment with Phuong Viet logo and favicon"
+
+# Push lên repository
+git push origin main
+# HOẶC nếu đang dùng master branch:
+# git push origin master
+```
+
+### Bước 3: Kiểm tra GitHub Actions
+1. Vào repository: https://github.com/Hieubkav/Phuong-Viet-ERP
+2. Click tab **Actions**
+3. Sẽ thấy workflow "Deploy to GitHub Pages" đang chạy
+4. Click vào workflow run để xem chi tiết
+
+### Bước 4: Kiểm tra GitHub Pages Settings
+1. Vào **Settings** > **Pages**
+2. Đảm bảo **Source** đã chọn **GitHub Actions** ✅
+3. Sau khi workflow hoàn thành, sẽ thấy URL: `https://hieubkav.github.io/Phuong-Viet-ERP/`
+
+## Cấu hình đã sẵn sàng
+
+### Workflow Features
+- ✅ Tự động chạy khi push vào `main` hoặc `master`
+- ✅ Có thể chạy thủ công từ Actions tab
+- ✅ Build bằng Bun (nhanh hơn npm)
+- ✅ Cấu hình đúng base path cho GitHub Pages
+- ✅ Upload artifacts và deploy tự động
 
 ## Scripts có sẵn
 

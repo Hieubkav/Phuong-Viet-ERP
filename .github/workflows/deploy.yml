@@ -1,10 +1,10 @@
 name: Deploy to GitHub Pages
 
 on:
-  # Chạy khi push vào main branch
+  # Chạy khi push vào main hoặc master branch
   push:
-    branches: [ main ]
-  
+    branches: [ main, master ]
+
   # Cho phép chạy workflow thủ công
   workflow_dispatch:
 
